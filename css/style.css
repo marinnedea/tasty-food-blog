@@ -331,7 +331,7 @@ a:hover { text-decoration: underline; }
     overflow-x: auto;
     font-size: 0.88rem;
 }
-.post-content a { color: var(--basil); }
+.post-content a:not(.btn-readmore) { color: var(--basil); }
 
 /* ── Recipe card embed (shortcode) ───────────────────────────── */
 .recipe-card-embed {
