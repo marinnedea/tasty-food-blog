@@ -29,9 +29,12 @@ define('SITE_LOGO',     '');       // e.g. 'uploads/logo.png'
 define('SITE_FAVICON',  '');       // e.g. 'uploads/favicon.ico'
 
 // ============================================================
-// TinyMCE — get a free key at https://www.tiny.cloud/
+// TinyMCE — set via environment variable TINYMCE_API_KEY.
+// Nginx PHP-FPM pool:  env[TINYMCE_API_KEY] = your-key-here
+// Apache VirtualHost:  SetEnv TINYMCE_API_KEY your-key-here
+// Falls back to 'no-api-key' if the variable is not set.
 // ============================================================
-define('TINYMCE_API_KEY', 'no-api-key');
+define('TINYMCE_API_KEY', getenv('TINYMCE_API_KEY') ?: 'no-api-key');
 
 // ============================================================
 // Homepage category chips — set false to hide
