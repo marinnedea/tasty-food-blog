@@ -31,10 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['remove_image']) && $img) {
             @unlink(dirname(__DIR__) . '/uploads/' . $img); $img = null;
         }
-        $upd = $db->prepare("UPDATE posts SET title=?, slug=?, content=?, featured_image=?, category_id=?, status=? WHERE id=?");
-        $upd->bind_param('ssssiisi', $title, $slug, $content, $img, $cat_id, $status, $id);
-
-        // Fix bind: nullable int
         $upd = $db->prepare("UPDATE posts SET title=?,slug=?,content=?,featured_image=?,category_id=?,status=? WHERE id=?");
         $upd->bind_param('ssssisi', $title, $slug, $content, $img, $cat_id, $status, $id);
         $upd->execute(); $upd->close();

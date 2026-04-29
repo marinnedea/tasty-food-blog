@@ -16,6 +16,7 @@ $_user = current_user();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;300&family=Source+Sans+3:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <script>var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
 </head>
 <body>
     <!-- Top nav bar -->
@@ -29,7 +30,7 @@ $_user = current_user();
             <div class="topbar-right">
                 <?php if ($_user): ?>
                     <?php if (has_role('admin','editor')): ?>
-                        <a href="/admin/">Admin</a>
+                        <a href="/admin/">Admin Panel</a>
                     <?php endif; ?>
                     <a href="/profile.php"><?= htmlspecialchars($_user['display_name'] ?: $_user['username']) ?></a>
                     <a href="/logout.php">Logout</a>
@@ -38,8 +39,8 @@ $_user = current_user();
                     <a href="/register.php">Register</a>
                 <?php endif; ?>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-                    <span class="icon-moon">☽</span>
-                    <span class="icon-sun">☀</span>
+                    <span class="icon-moon">🌙</span>
+                    <span class="icon-sun">☀️</span>
                 </button>
             </div>
         </div>

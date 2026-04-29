@@ -21,7 +21,7 @@ $u = current_user();
     <link rel="stylesheet" href="/css/style.css">
     <script>var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
     <style>
-        .dash-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:32px; }
+        .dash-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
         .dash-card { background:var(--bg-card); border-radius:var(--radius-lg); padding:20px; box-shadow:var(--shadow-sm); text-align:center; }
         .dash-card .num { font-size:2.5rem; font-weight:700; color:var(--basil); line-height:1; }
         .dash-card .lbl { font-size:.78rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
