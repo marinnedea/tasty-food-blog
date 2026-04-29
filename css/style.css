@@ -344,7 +344,7 @@ a:hover { text-decoration: underline; }
     margin: 24px 0;
     box-shadow: var(--shadow-sm);
 }
-.recipe-card-embed img { width: 160px; height: 120px; object-fit: cover; flex-shrink: 0; }
+.recipe-card-embed img { width: 160px; height: 120px; object-fit: cover; flex-shrink: 0; border-radius: var(--radius); margin: 12px 0 12px 12px; }
 .recipe-card-body { padding: 16px; display: flex; flex-direction: column; gap: 6px; }
 .recipe-card-body h4 { font-family: var(--font-display); font-size: 1.05rem; }
 .recipe-card-body h4 a { color: var(--ink); text-decoration: none; }
