@@ -26,6 +26,8 @@ $_user = current_user();
                 <a href="/">Home</a>
                 <a href="/blog">Blog</a>
                 <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/guides">Guides</a>
             </nav>
             <div class="topbar-right">
                 <?php if ($_user): ?>
@@ -48,30 +50,30 @@ $_user = current_user();
 
     <!-- Site header / wordmark -->
     <header class="site-header">
-        <div class="site-wrap site-header-inner">
+        <div class="site-wrap">
             <div class="site-wordmark">
                 <a href="/">
                     <?php if (SITE_LOGO): ?>
                         <img src="/<?= htmlspecialchars(SITE_LOGO) ?>" alt="<?= htmlspecialchars(SITE_TITLE) ?>" class="site-logo">
                     <?php else: ?>
-                        <span class="wm-discover">DISCOVER</span><span class="wm-tasty">TASTY</span>
+                        <span class="wm-discover">DISCOVER</span><span class="wm-tasty">TASTY</span><span class="wm-food">FOOD</span>
                     <?php endif; ?>
                 </a>
             </div>
-            <nav class="cat-pills">
+            <nav class="header-pills">
                 <?php
                 global $db;
-                $cats = $db->query("SELECT name, slug, color FROM categories ORDER BY id");
+                $cats = $db->query("SELECT name, slug FROM categories WHERE slug != 'guides' ORDER BY id");
                 while ($cat = $cats->fetch_assoc()):
                 ?>
                     <a href="/category/<?= htmlspecialchars($cat['slug']) ?>"
-                       class="cat-pill"
-                       style="background:<?= htmlspecialchars($cat['color']) ?>">
+                       class="header-pill pill-<?= htmlspecialchars($cat['slug']) ?>">
                         <?= htmlspecialchars(strtoupper($cat['name'])) ?>
                     </a>
                 <?php endwhile; ?>
             </nav>
         </div>
     </header>
+    <div class="header-stripe"><div class="hs-1"></div><div class="hs-2"></div><div class="hs-3"></div><div class="hs-4"></div></div>
 
-    <div class="site-wrap content-wrap">
+    <div class="<?= !empty($full_width) ? 'content-wrap content-wrap--full' : 'site-wrap content-wrap' ?>">

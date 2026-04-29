@@ -6,7 +6,7 @@ auth_start();
 if (!is_logged_in()) { echo json_encode(['ok'=>false]); exit; }
 
 $data   = json_decode(file_get_contents('php://input'), true);
-$type   = in_array($data['type'] ?? '', ['post','recipe']) ? $data['type'] : null;
+$type   = in_array($data['type'] ?? '', ['post','recipe','guide']) ? $data['type'] : null;
 $id     = (int)($data['id'] ?? 0);
 $rating = (int)($data['rating'] ?? 0);
 $uid    = current_user()['id'];

@@ -58,11 +58,31 @@ CREATE TABLE recipes (
     FOREIGN KEY (author_id)   REFERENCES users(id)      ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ── Guides ────────────────────────────────────────────────────────
+CREATE TABLE guides (
+    id             INT AUTO_INCREMENT PRIMARY KEY,
+    title          VARCHAR(255) NOT NULL,
+    slug           VARCHAR(255) NOT NULL UNIQUE,
+    place_name     VARCHAR(255) NOT NULL,
+    location       VARCHAR(255) NOT NULL,
+    dish           VARCHAR(255) NOT NULL,
+    price_range    ENUM('€','€€','€€€') NOT NULL DEFAULT '€€',
+    score          TINYINT UNSIGNED NULL,
+    excerpt        TEXT         NULL,
+    content        LONGTEXT     NOT NULL,
+    featured_image VARCHAR(255) NULL,
+    author_id      INT          NOT NULL,
+    status         ENUM('draft','published') NOT NULL DEFAULT 'draft',
+    created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- ── User favourites ───────────────────────────────────────────────
 CREATE TABLE user_favorites (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     user_id    INT NOT NULL,
-    item_type  ENUM('post','recipe') NOT NULL,
+    item_type  ENUM('post','recipe','guide') NOT NULL,
     item_id    INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY unique_fav (user_id, item_type, item_id),
@@ -73,11 +93,21 @@ CREATE TABLE user_favorites (
 CREATE TABLE ratings (
     id        INT AUTO_INCREMENT PRIMARY KEY,
     user_id   INT NOT NULL,
-    item_type ENUM('post','recipe') NOT NULL,
+    item_type ENUM('post','recipe','guide') NOT NULL,
     item_id   INT NOT NULL,
     rating    TINYINT UNSIGNED NOT NULL CHECK (rating BETWEEN 1 AND 5),
     UNIQUE KEY unique_rating (user_id, item_type, item_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ── Contact messages ─────────────────────────────────────────────
+CREATE TABLE contact_messages (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    name       VARCHAR(120) NOT NULL,
+    email      VARCHAR(255) NOT NULL,
+    subject    VARCHAR(255),
+    message    TEXT         NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ── Seed categories ───────────────────────────────────────────────

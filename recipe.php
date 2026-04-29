@@ -153,12 +153,29 @@ document.querySelectorAll('#star-rating .star').forEach(function(star) {
         var type = document.getElementById('star-rating').dataset.type;
         var id   = document.getElementById('star-rating').dataset.id;
         fetch('/api/rate.php', {
-            method:'POST', headers:{'Content-Type':'application/json'},
+            method:'POST', credentials:'same-origin', headers:{'Content-Type':'application/json'},
             body: JSON.stringify({type:type, id:id, rating:val})
         }).then(r=>r.json()).then(d=>{
             if (d.ok) document.querySelectorAll('#star-rating .star').forEach(s=>{
                 s.classList.toggle('active', parseInt(s.dataset.val) <= parseInt(val));
             });
+        });
+    });
+});
+
+document.querySelectorAll('.fav-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var self = this;
+        fetch('/api/favourite.php', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({type: self.dataset.type, id: self.dataset.id})
+        }).then(function(r){ return r.json(); }).then(function(d){
+            if (d.ok) {
+                self.textContent = d.saved ? '♥ Saved' : '♡ Save to favourites';
+                self.classList.toggle('fav-saved', d.saved);
+            }
         });
     });
 });

@@ -11,6 +11,7 @@ $st->execute();
 $cat = $st->get_result()->fetch_assoc();
 $st->close();
 if (!$cat) { header('Location: /'); exit; }
+if ($cat['slug'] === 'guides') { header('Location: /guides'); exit; }
 
 $posts_st = $db->prepare("
     SELECT p.title, p.slug, p.content, p.featured_image, p.created_at,

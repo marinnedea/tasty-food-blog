@@ -68,7 +68,19 @@ $fav_recipes->execute();
 $fav_recipes_result = $fav_recipes->get_result();
 $fav_recipes->close();
 
+$fav_guides = $db->prepare("
+    SELECT g.title, g.slug, g.place_name, g.created_at FROM user_favorites f
+    JOIN guides g ON f.item_id=g.id
+    WHERE f.user_id=? AND f.item_type='guide' AND g.status='published'
+    ORDER BY f.created_at DESC
+");
+$fav_guides->bind_param('i', $uid);
+$fav_guides->execute();
+$fav_guides_result = $fav_guides->get_result();
+$fav_guides->close();
+
 $page_title = 'My Profile — ' . SITE_TITLE;
+$full_width = true;
 require 'includes/header.php';
 ?>
 <main class="main-content">
@@ -129,6 +141,20 @@ require 'includes/header.php';
             </ul>
         <?php endif; ?>
 
+        <h3 style="font-family:var(--font-display);margin-bottom:12px;">Saved Guides</h3>
+        <?php if ($fav_guides_result->num_rows === 0): ?>
+            <p style="color:var(--muted);font-size:.9rem;">No saved guides yet.</p>
+        <?php else: ?>
+            <ul class="widget-list">
+                <?php while ($g = $fav_guides_result->fetch_assoc()): ?>
+                    <li>
+                        <a href="/guide/<?= htmlspecialchars($g['slug']) ?>"><?= htmlspecialchars($g['title']) ?></a>
+                        <span class="widget-meta"><?= htmlspecialchars($g['place_name']) ?></span>
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+        <?php endif; ?>
+
     <?php elseif ($tab === 'settings'): ?>
 
         <?php if ($error): ?><div class="alert alert-error"><?= htmlspecialchars($error) ?></div><?php endif; ?>
@@ -161,5 +187,4 @@ require 'includes/header.php';
     <?php endif; ?>
 
 </main>
-<?php require 'includes/sidebar.php'; ?>
 <?php require 'includes/footer.php'; ?>

@@ -6,6 +6,7 @@ require_backend();
 $counts = [
     'posts'    => $db->query("SELECT COUNT(*) c FROM posts")->fetch_assoc()['c'],
     'recipes'  => $db->query("SELECT COUNT(*) c FROM recipes")->fetch_assoc()['c'],
+    'guides'   => $db->query("SELECT COUNT(*) c FROM guides")->fetch_assoc()['c'],
     'users'    => $db->query("SELECT COUNT(*) c FROM users")->fetch_assoc()['c'],
     'cats'     => $db->query("SELECT COUNT(*) c FROM categories")->fetch_assoc()['c'],
 ];
@@ -21,7 +22,7 @@ $u = current_user();
     <link rel="stylesheet" href="/css/style.css">
     <script>var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
     <style>
-        .dash-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
+        .dash-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; margin-bottom:32px; }
         .dash-card { background:var(--bg-card); border-radius:var(--radius-lg); padding:20px; box-shadow:var(--shadow-sm); text-align:center; }
         .dash-card .num { font-size:2.5rem; font-weight:700; color:var(--basil); line-height:1; }
         .dash-card .lbl { font-size:.78rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
@@ -45,6 +46,7 @@ $u = current_user();
     <div class="dash-grid">
         <div class="dash-card"><div class="num"><?= $counts['posts'] ?></div><div class="lbl">Posts</div></div>
         <div class="dash-card"><div class="num"><?= $counts['recipes'] ?></div><div class="lbl">Recipes</div></div>
+        <div class="dash-card"><div class="num"><?= $counts['guides'] ?></div><div class="lbl">Guides</div></div>
         <div class="dash-card"><div class="num"><?= $counts['users'] ?></div><div class="lbl">Users</div></div>
         <div class="dash-card"><div class="num"><?= $counts['cats'] ?></div><div class="lbl">Categories</div></div>
     </div>
@@ -54,6 +56,8 @@ $u = current_user();
         <a href="add_post.php" class="dash-link">✏️ New Post</a>
         <a href="recipes.php" class="dash-link">🍽️ Manage Recipes</a>
         <a href="add_recipe.php" class="dash-link">➕ New Recipe</a>
+        <a href="guides.php" class="dash-link">🗺️ Manage Guides</a>
+        <a href="add_guide.php" class="dash-link">📍 New Guide</a>
         <a href="categories.php" class="dash-link">🏷️ Categories</a>
         <?php if (has_role('admin')): ?>
             <a href="users.php" class="dash-link">👥 Users</a>

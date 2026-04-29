@@ -120,12 +120,17 @@ document.querySelectorAll('#star-rating .star').forEach(function(star) {
 
 document.querySelectorAll('.fav-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
+        var self = this;
         fetch('/api/favourite.php', {
             method: 'POST',
+            credentials: 'same-origin',
             headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({type: this.dataset.type, id: this.dataset.id})
+            body: JSON.stringify({type: self.dataset.type, id: self.dataset.id})
         }).then(function(r){ return r.json(); }).then(function(d){
-            btn.textContent = d.saved ? '♥ Saved' : '♡ Save to favourites';
+            if (d.ok) {
+                self.textContent = d.saved ? '♥ Saved' : '♡ Save to favourites';
+                self.classList.toggle('fav-saved', d.saved);
+            }
         });
     });
 });
