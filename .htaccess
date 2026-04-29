@@ -1,0 +1,13 @@
+Options -Indexes
+
+RewriteEngine On
+
+# Clean URLs
+RewriteRule ^post/([^/]+)/?$     post.php?slug=$1   [L,QSA]
+RewriteRule ^recipe/([^/]+)/?$   recipe.php?slug=$1 [L,QSA]
+RewriteRule ^category/([^/]+)/?$ category.php?slug=$1 [L,QSA]
+RewriteRule ^search/?$           search.php         [L,QSA]
+RewriteRule ^blog/?$             blog.php           [L,QSA]
+
+# Block direct access to includes
+RewriteRule ^includes/ - [F,L]
